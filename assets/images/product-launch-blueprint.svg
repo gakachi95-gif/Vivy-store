@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="Product Launch Blueprint placeholder cover">
+  <defs>
+    <linearGradient id="g4" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#5B4EF4"/>
+      <stop offset="100%" stop-color="#392FC7"/>
+    </linearGradient>
+    <pattern id="dots4" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#FFFFFF" opacity="0.16"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="600" rx="0" fill="url(#g4)"/>
+  <rect width="600" height="600" fill="url(#dots4)"/>
+  <circle cx="500" cy="90" r="130" fill="#FFFFFF" opacity="0.06"/>
+  <circle cx="70" cy="520" r="160" fill="#000000" opacity="0.08"/>
+  <rect x="40" y="40" width="126" height="40" rx="20" fill="#0F0D18" opacity="0.28"/>
+  <text x="103" y="66" font-family="'JetBrains Mono', monospace" font-size="15" font-weight="600" letter-spacing="1.5" fill="#FFFFFF" text-anchor="middle">VIVY</text>
+  <text x="300" y="300" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#FFFFFF" text-anchor="middle" opacity="0.96">Product Launch</text>
+<text x="300" y="346" font-family="Georgia, 'Times New Roman', serif" font-size="38" font-weight="700" fill="#FFFFFF" text-anchor="middle" opacity="0.96">Blueprint</text>
+
+  <rect x="230" y="340" width="140" height="4" rx="2" fill="#FFFFFF" opacity="0.55"/>
+</svg>
