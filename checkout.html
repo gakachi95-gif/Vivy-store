@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout | Vivy</title>
+<meta name="description" content="Complete your order for Vivy digital products.">
+<link rel="canonical" href="https://vivy.example.com/checkout.html">
+<meta property="og:title" content="Checkout | Vivy">
+<meta property="og:description" content="Complete your order for Vivy digital products.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vivy.example.com/checkout.html">
+<meta property="og:image" content="https://vivy.example.com/assets/images/og-default.svg">
+<meta property="og:site_name" content="Vivy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Checkout | Vivy">
+<meta name="twitter:description" content="Complete your order for Vivy digital products.">
+<meta name="twitter:image" content="https://vivy.example.com/assets/images/og-default.svg">
+<meta name="theme-color" content="#5B4EF4">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="nav-logo" aria-label="Vivy home">
+        <svg viewBox="0 0 140 40" width="88" height="26" role="img" aria-hidden="true"><text x="0" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="currentColor">Vivy</text><circle cx="118" cy="10" r="5" fill="#FF6B57"/></svg>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="store.html">Store</a>
+        <a href="categories.html">Categories</a>
+        <a href="bundles.html">Bundles</a>
+        <a href="free-resources.html">Free Resources</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button type="button" class="btn-icon" data-search-open aria-label="Search products">
+          <svg class="icon" width="19" height="19"><use href="assets/icons/sprite.svg#icon-search"></use></svg>
+        </button>
+        <a href="cart.html" class="btn-icon nav-cart" aria-label="View cart">
+          <svg class="icon" width="19" height="19"><use href="assets/icons/sprite.svg#icon-cart"></use></svg>
+          <span class="cart-badge" data-cart-count>0</span>
+        </a>
+        <button type="button" class="btn-icon nav-toggle" data-mobile-toggle aria-label="Open menu" aria-expanded="false">
+          <svg class="icon" width="20" height="20"><use href="assets/icons/sprite.svg#icon-menu"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" data-mobile-menu>
+    <div class="mobile-menu-head">
+      <a href="index.html" class="nav-logo" aria-label="Vivy home">
+        <svg viewBox="0 0 140 40" width="80" height="24" role="img" aria-hidden="true"><text x="0" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="currentColor">Vivy</text><circle cx="118" cy="10" r="5" fill="#FF6B57"/></svg>
+      </a>
+      <button type="button" class="btn-icon" data-mobile-close aria-label="Close menu">
+        <svg class="icon" width="18" height="18"><use href="assets/icons/sprite.svg#icon-close"></use></svg>
+      </button>
+    </div>
+    <nav aria-label="Mobile">
+      <a href="index.html">Home</a>
+      <a href="store.html">Store</a>
+      <a href="categories.html">Categories</a>
+      <a href="bundles.html">Bundles</a>
+      <a href="free-resources.html">Free Resources</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div class="mobile-menu-actions">
+      <a href="cart.html" class="btn btn-outline btn-block">View Cart</a>
+      <a href="store.html" class="btn btn-primary btn-block">Explore Products</a>
+    </div>
+  </div>
+
+  <div class="search-overlay" data-search-overlay>
+    <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search Vivy products">
+      <div class="search-input-row">
+        <svg class="icon" width="20" height="20"><use href="assets/icons/sprite.svg#icon-search"></use></svg>
+        <input type="search" placeholder="Search products, categories, keywords..." data-search-input aria-label="Search products">
+        <button type="button" class="btn-icon" data-search-close aria-label="Close search">
+          <svg class="icon" width="16" height="16"><use href="assets/icons/sprite.svg#icon-close"></use></svg>
+        </button>
+      </div>
+      <div class="search-results" data-search-results></div>
+    </div>
+  </div>
+
+<main id="main">
+
+<div class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><a href="cart.html">Cart</a><span class="sep">/</span><span class="current">Checkout</span></nav>
+    <span class="eyebrow">Checkout</span>
+    <h1>Checkout</h1>
+    <p>Enter your details below. Vivy uses this information to confirm your order and deliver your digital product.</p>
+  </div>
+</div>
+
+<section class="section--tight">
+  <div class="container">
+    <div id="checkout-empty" style="display:none;">
+      <div class="empty-state">
+        <div class="icon-wrap"><svg class="icon" width="36" height="36"><use href="assets/icons/sprite.svg#icon-cart"></use></svg></div>
+        <h3>Checkout unavailable</h3>
+        <p>Your cart is empty, so there's nothing to check out yet. Browse the store to add a product first.</p>
+        <a href="store.html" class="btn btn-primary">Explore Products</a>
+      </div>
+    </div>
+
+    <div class="cart-layout" id="checkout-layout" style="display:none;">
+      <div class="form-card">
+        <h3>Contact &amp; Order Information</h3>
+        <form id="checkout-form" novalidate>
+          <div class="form-field">
+            <label for="full-name">Full name</label>
+            <input type="text" id="full-name" name="fullName" autocomplete="name" required>
+          </div>
+          <div class="form-field">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" autocomplete="email" required>
+            <p class="hint">Your product access and receipt will be sent here.</p>
+          </div>
+          <div class="form-row-2">
+            <div class="form-field">
+              <label for="country">Country</label>
+              <select id="country" name="country" autocomplete="country-name" required>
+                <option value="">Select your country</option>
+                <option>Nigeria</option><option>United States</option><option>United Kingdom</option>
+                <option>Canada</option><option>Ghana</option><option>Kenya</option><option>South Africa</option>
+                <option>India</option><option>Germany</option><option>France</option><option>Other</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label for="promo">Promo code <span class="hint">(optional)</span></label>
+              <input type="text" id="promo" name="promo">
+            </div>
+          </div>
+
+          <div class="form-note">
+            <svg class="icon" width="18" height="18"><use href="assets/icons/sprite.svg#icon-shield"></use></svg>
+            <span>Vivy never stores payment card details in this website. Payment will be securely handled by a connected payment provider (such as Flutterwave) once configured. This demo checkout does not process real payments.</span>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-lg btn-block mt-2" id="checkout-submit-btn">Continue to Payment</button>
+        </form>
+
+        <div id="checkout-result" class="mt-2" style="display:none;"></div>
+      </div>
+
+      <aside class="cart-summary">
+        <h3>Order Summary</h3>
+        <div id="checkout-summary-items"></div>
+        <div class="summary-row total"><span>Total</span><span class="price" id="checkout-total">$0</span></div>
+      </aside>
+    </div>
+  </div>
+</section>
+
+</main>
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" aria-label="Vivy home">
+          <svg viewBox="0 0 140 40" width="88" height="26" role="img" aria-hidden="true"><text x="0" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="currentColor">Vivy</text><circle cx="118" cy="10" r="5" fill="#FF6B57"/></svg>
+        </a>
+        <p class="footer-tagline">Learn. Apply. Build. Grow.</p>
+        <p class="footer-desc">Practical digital products and resources to help you learn digital skills, use AI, grow online and build something real.</p>
+        <div class="footer-social">
+        <a class="btn-icon" href="https://facebook.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on Facebook"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-facebook"></use></svg></a>
+        <a class="btn-icon" href="https://instagram.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on Instagram"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-instagram"></use></svg></a>
+        <a class="btn-icon" href="https://tiktok.com/@vivy" target="_blank" rel="noopener" aria-label="Vivy on TikTok"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-tiktok"></use></svg></a>
+        <a class="btn-icon" href="https://youtube.com/@vivy" target="_blank" rel="noopener" aria-label="Vivy on YouTube"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-youtube"></use></svg></a>
+        <a class="btn-icon" href="https://x.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on X"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-x"></use></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="store.html">All Products</a></li>
+          <li><a href="store.html?sort=bestselling">Best Sellers</a></li>
+          <li><a href="store.html?sort=newest">New Products</a></li>
+          <li><a href="bundles.html">Bundles</a></li>
+          <li><a href="free-resources.html">Free Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Vivy</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="refund-policy.html">Refund Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stay Updated</h4>
+        <form data-newsletter-form aria-label="Newsletter signup">
+          <div class="form-field">
+            <label for="footer-newsletter-email" class="visually-hidden">Email address</label>
+            <input type="email" id="footer-newsletter-email" placeholder="Enter your email" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm btn-block">Join Vivy</button>
+          <p class="hint" data-newsletter-status style="margin-top:8px;"></p>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; <span data-year></span> Vivy. All rights reserved.</p>
+      <p>Digital products, delivered digitally. Built with care.</p>
+    </div>
+  </footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  const params = new URLSearchParams(window.location.search);
+  const directSlug = params.get('slug');
+  if (directSlug) {
+    const existing = VivyCart.getItems();
+    if (!existing.find(i => i.slug === directSlug)) VivyCart.addItem(directSlug, 1);
+  }
+
+  const items = await VivyCart.getDetailedItems();
+  const emptyEl = document.getElementById('checkout-empty');
+  const layoutEl = document.getElementById('checkout-layout');
+
+  if (!items.length) {
+    emptyEl.style.display = 'block';
+    layoutEl.style.display = 'none';
+    return;
+  }
+  emptyEl.style.display = 'none';
+  layoutEl.style.display = 'grid';
+
+  const summaryEl = document.getElementById('checkout-summary-items');
+  summaryEl.innerHTML = items.map(i => `
+    <div class="summary-row"><span>${i.product.name} ${i.quantity > 1 ? '&times; ' + i.quantity : ''}</span><span>${Vivy.formatMoney(i.lineTotal, i.product.currency)}</span></div>
+  `).join('');
+  const total = items.reduce((s, i) => s + i.lineTotal, 0);
+  document.getElementById('checkout-total').textContent = Vivy.formatMoney(total, 'USD');
+
+  const form = document.getElementById('checkout-form');
+  const resultEl = document.getElementById('checkout-result');
+  const submitBtn = document.getElementById('checkout-submit-btn');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    /*
+      IMPORTANT — READ BEFORE CONNECTING A REAL PAYMENT PROVIDER:
+      This static site cannot securely process payments or verify them on its
+      own. GitHub Pages hosts static files only; it has no server to talk to
+      a payment provider privately or to confirm a transaction actually
+      succeeded. Never trust a "payment successful" state that is only set by
+      frontend JavaScript, because it can be triggered by anyone without
+      paying.
+
+      To connect real payment (e.g. Flutterwave):
+      1. Create a small backend or serverless function (e.g. on Vercel,
+         Netlify Functions, Cloudflare Workers, or your own server) that
+         holds your SECRET keys — never put secret keys in this file.
+      2. This form should redirect to, or open, that payment provider's
+         secure hosted checkout (Flutterwave/PayStack/etc. all support this),
+         passing only non-secret order details (name, email, amount, a
+         reference ID for the items in "items").
+      3. The provider redirects back to a page on your site with a
+         transaction reference.
+      4. Your backend verifies that reference directly with the provider's
+         API (server-to-server, using the secret key) before it is trusted.
+      5. Only after that server-side verification should the backend email
+         the customer their access/download link for the purchased product.
+      This form currently stops here intentionally, since wiring step 1-4
+      requires a real backend which this static template cannot fake safely.
+    */
+    submitBtn.disabled = true;
+    resultEl.style.display = 'block';
+    resultEl.innerHTML = `
+      <div class="form-note" style="background:var(--color-amber-light);">
+        <svg class="icon" width="18" height="18"><use href="assets/icons/sprite.svg#icon-shield"></use></svg>
+        <span>
+          <strong>Payment isn't connected yet.</strong> This checkout form is ready for a real payment provider
+          (like Flutterwave), but no payment has been processed and no order has been created.
+          Once Vivy connects a secure backend/payment integration, this step will send you to a real, secure
+          payment page. See the project README for how this gets wired up.
+        </span>
+      </div>`;
+  });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Contact Vivy</title>
+<meta name="description" content="Get in touch with Vivy for order support, product questions or partnerships.">
+<link rel="canonical" href="https://vivy.example.com/contact.html">
+<meta property="og:title" content="Contact Vivy">
+<meta property="og:description" content="Get in touch with Vivy for order support, product questions or partnerships.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://vivy.example.com/contact.html">
+<meta property="og:image" content="https://vivy.example.com/assets/images/og-default.svg">
+<meta property="og:site_name" content="Vivy">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Contact Vivy">
+<meta name="twitter:description" content="Get in touch with Vivy for order support, product questions or partnerships.">
+<meta name="twitter:image" content="https://vivy.example.com/assets/images/og-default.svg">
+<meta name="theme-color" content="#5B4EF4">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="nav-logo" aria-label="Vivy home">
+        <svg viewBox="0 0 140 40" width="88" height="26" role="img" aria-hidden="true"><text x="0" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="currentColor">Vivy</text><circle cx="118" cy="10" r="5" fill="#FF6B57"/></svg>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="index.html">Home</a>
+        <a href="store.html">Store</a>
+        <a href="categories.html">Categories</a>
+        <a href="bundles.html">Bundles</a>
+        <a href="free-resources.html">Free Resources</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" aria-current="page">Contact</a>
+      </nav>
+      <div class="nav-actions">
+        <button type="button" class="btn-icon" data-search-open aria-label="Search products">
+          <svg class="icon" width="19" height="19"><use href="assets/icons/sprite.svg#icon-search"></use></svg>
+        </button>
+        <a href="cart.html" class="btn-icon nav-cart" aria-label="View cart">
+          <svg class="icon" width="19" height="19"><use href="assets/icons/sprite.svg#icon-cart"></use></svg>
+          <span class="cart-badge" data-cart-count>0</span>
+        </a>
+        <button type="button" class="btn-icon nav-toggle" data-mobile-toggle aria-label="Open menu" aria-expanded="false">
+          <svg class="icon" width="20" height="20"><use href="assets/icons/sprite.svg#icon-menu"></use></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <div class="mobile-menu" data-mobile-menu>
+    <div class="mobile-menu-head">
+      <a href="index.html" class="nav-logo" aria-label="Vivy home">
+        <svg viewBox="0 0 140 40" width="80" height="24" role="img" aria-hidden="true"><text x="0" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="currentColor">Vivy</text><circle cx="118" cy="10" r="5" fill="#FF6B57"/></svg>
+      </a>
+      <button type="button" class="btn-icon" data-mobile-close aria-label="Close menu">
+        <svg class="icon" width="18" height="18"><use href="assets/icons/sprite.svg#icon-close"></use></svg>
+      </button>
+    </div>
+    <nav aria-label="Mobile">
+      <a href="index.html">Home</a>
+      <a href="store.html">Store</a>
+      <a href="categories.html">Categories</a>
+      <a href="bundles.html">Bundles</a>
+      <a href="free-resources.html">Free Resources</a>
+      <a href="about.html">About</a>
+      <a href="contact.html" aria-current="page">Contact</a>
+    </nav>
+    <div class="mobile-menu-actions">
+      <a href="cart.html" class="btn btn-outline btn-block">View Cart</a>
+      <a href="store.html" class="btn btn-primary btn-block">Explore Products</a>
+    </div>
+  </div>
+
+  <div class="search-overlay" data-search-overlay>
+    <div class="search-panel" role="dialog" aria-modal="true" aria-label="Search Vivy products">
+      <div class="search-input-row">
+        <svg class="icon" width="20" height="20"><use href="assets/icons/sprite.svg#icon-search"></use></svg>
+        <input type="search" placeholder="Search products, categories, keywords..." data-search-input aria-label="Search products">
+        <button type="button" class="btn-icon" data-search-close aria-label="Close search">
+          <svg class="icon" width="16" height="16"><use href="assets/icons/sprite.svg#icon-close"></use></svg>
+        </button>
+      </div>
+      <div class="search-results" data-search-results></div>
+    </div>
+  </div>
+
+<main id="main">
+
+<div class="page-hero">
+  <div class="container">
+    <nav class="breadcrumb" aria-label="Breadcrumb"><a href="index.html">Home</a><span class="sep">/</span><span class="current">Contact</span></nav>
+    <span class="eyebrow">Get In Touch</span>
+    <h1>Contact Vivy</h1>
+    <p>Questions about a product, an order, or a partnership? Send a message and we'll get back to you.</p>
+  </div>
+</div>
+
+<section class="section--tight">
+  <div class="container contact-layout">
+    <div>
+      <div class="form-card">
+        <h3>Send a message</h3>
+        <form id="contact-form">
+          <div class="form-field">
+            <label for="contact-name">Full name</label>
+            <input type="text" id="contact-name" name="name" required>
+          </div>
+          <div class="form-field">
+            <label for="contact-email">Email address</label>
+            <input type="email" id="contact-email" name="email" required>
+          </div>
+          <div class="form-field">
+            <label for="contact-subject">Subject</label>
+            <select id="contact-subject" name="subject">
+              <option>General question</option>
+              <option>Order support</option>
+              <option>Product question</option>
+              <option>Partnership / collaboration</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="contact-message">Message</label>
+            <textarea id="contact-message" name="message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary btn-block" id="contact-submit-btn">Send Message</button>
+          <p class="hint mt-1" id="contact-status"></p>
+        </form>
+      </div>
+    </div>
+
+    <div>
+      <h3>Other ways to reach us</h3>
+      <div class="mt-1">
+        <div class="contact-info-item">
+          <span class="cii-icon"><svg class="icon" width="20" height="20"><use href="assets/icons/sprite.svg#icon-mail"></use></svg></span>
+          <div>
+            <strong style="color:var(--color-ink);">Email</strong>
+            <p>hello@vivy.example.com</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <span class="cii-icon"><svg class="icon" width="20" height="20"><use href="assets/icons/sprite.svg#icon-check-circle"></use></svg></span>
+          <div>
+            <strong style="color:var(--color-ink);">Response time</strong>
+            <p>We typically reply within 1&ndash;2 business days.</p>
+          </div>
+        </div>
+        <div class="contact-info-item">
+          <span class="cii-icon"><svg class="icon" width="20" height="20"><use href="assets/icons/sprite.svg#icon-link"></use></svg></span>
+          <div>
+            <strong style="color:var(--color-ink);">Follow Vivy</strong>
+            <div class="footer-social mt-1">
+              <a class="btn-icon" href="https://facebook.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on Facebook"><svg class="icon" width="16" height="16"><use href="assets/icons/sprite.svg#icon-facebook"></use></svg></a>
+              <a class="btn-icon" href="https://instagram.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on Instagram"><svg class="icon" width="16" height="16"><use href="assets/icons/sprite.svg#icon-instagram"></use></svg></a>
+              <a class="btn-icon" href="https://tiktok.com/@vivy" target="_blank" rel="noopener" aria-label="Vivy on TikTok"><svg class="icon" width="16" height="16"><use href="assets/icons/sprite.svg#icon-tiktok"></use></svg></a>
+              <a class="btn-icon" href="https://youtube.com/@vivy" target="_blank" rel="noopener" aria-label="Vivy on YouTube"><svg class="icon" width="16" height="16"><use href="assets/icons/sprite.svg#icon-youtube"></use></svg></a>
+              <a class="btn-icon" href="https://x.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on X"><svg class="icon" width="16" height="16"><use href="assets/icons/sprite.svg#icon-x"></use></svg></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <p>Have a general question? Check the <a href="faq.html" style="color:var(--color-primary);font-weight:600;">FAQ page</a> first &mdash; you might find your answer right away.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+  <footer class="site-footer">
+    <div class="container footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="nav-logo" aria-label="Vivy home">
+          <svg viewBox="0 0 140 40" width="88" height="26" role="img" aria-hidden="true"><text x="0" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="currentColor">Vivy</text><circle cx="118" cy="10" r="5" fill="#FF6B57"/></svg>
+        </a>
+        <p class="footer-tagline">Learn. Apply. Build. Grow.</p>
+        <p class="footer-desc">Practical digital products and resources to help you learn digital skills, use AI, grow online and build something real.</p>
+        <div class="footer-social">
+        <a class="btn-icon" href="https://facebook.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on Facebook"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-facebook"></use></svg></a>
+        <a class="btn-icon" href="https://instagram.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on Instagram"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-instagram"></use></svg></a>
+        <a class="btn-icon" href="https://tiktok.com/@vivy" target="_blank" rel="noopener" aria-label="Vivy on TikTok"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-tiktok"></use></svg></a>
+        <a class="btn-icon" href="https://youtube.com/@vivy" target="_blank" rel="noopener" aria-label="Vivy on YouTube"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-youtube"></use></svg></a>
+        <a class="btn-icon" href="https://x.com/vivy" target="_blank" rel="noopener" aria-label="Vivy on X"><svg class="icon" width="17" height="17"><use href="assets/icons/sprite.svg#icon-x"></use></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Shop</h4>
+        <ul>
+          <li><a href="store.html">All Products</a></li>
+          <li><a href="store.html?sort=bestselling">Best Sellers</a></li>
+          <li><a href="store.html?sort=newest">New Products</a></li>
+          <li><a href="bundles.html">Bundles</a></li>
+          <li><a href="free-resources.html">Free Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="about.html">About Vivy</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="faq.html">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms &amp; Conditions</a></li>
+          <li><a href="refund-policy.html">Refund Policy</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Stay Updated</h4>
+        <form data-newsletter-form aria-label="Newsletter signup">
+          <div class="form-field">
+            <label for="footer-newsletter-email" class="visually-hidden">Email address</label>
+            <input type="email" id="footer-newsletter-email" placeholder="Enter your email" required>
+          </div>
+          <button type="submit" class="btn btn-primary btn-sm btn-block">Join Vivy</button>
+          <p class="hint" data-newsletter-status style="margin-top:8px;"></p>
+        </form>
+      </div>
+    </div>
+    <div class="container footer-bottom">
+      <p>&copy; <span data-year></span> Vivy. All rights reserved.</p>
+      <p>Digital products, delivered digitally. Built with care.</p>
+    </div>
+  </footer>
+
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/search.js"></script>
+<script src="js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('contact-form');
+  const status = document.getElementById('contact-status');
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    /*
+      NOTE FOR VIVY: This form is frontend-only. To receive these messages,
+      connect a form backend such as Formspree, Getform, or a simple
+      serverless function, and point this form's submit handler (or a plain
+      HTML action attribute) at that endpoint. Never put private API keys in
+      this file.
+    */
+    status.textContent = "Thanks — your message has been prepared. Connect a form service (see README) to actually deliver it.";
+    status.style.color = 'var(--color-teal)';
+    form.reset();
+  });
+});
+</script>
+</body>
+</html>
