@@ -167,8 +167,10 @@ p { color: var(--color-muted); }
 .btn-lg { padding: 17px 32px; font-size: 1.02rem; }
 .btn[disabled] { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 .btn-icon {
+  display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
   width: 44px; height: 44px; min-height: 44px; padding: 0; border-radius: 50%;
   background: var(--color-surface); border: 1.5px solid var(--color-border); color: var(--color-ink);
+  transition: border-color var(--transition), color var(--transition);
 }
 .btn-icon:hover { border-color: var(--color-primary); color: var(--color-primary); }
 
