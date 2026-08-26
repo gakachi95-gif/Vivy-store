@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vivy Admin — Product Manager</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+<div class="admin-shell">
+
+  <header class="admin-header">
+    <div class="admin-brand">
+      <svg viewBox="0 0 140 40" width="76" height="22" role="img" aria-hidden="true"><text x="0" y="30" font-family="Georgia, 'Times New Roman', serif" font-size="30" font-weight="700" fill="currentColor">Vivy</text><circle cx="118" cy="10" r="5" fill="#FF6B57"/></svg>
+      <span>Admin</span>
+    </div>
+    <div class="admin-header-actions" id="admin-header-actions" hidden>
+      <span class="hint"><span class="admin-status-dot"></span><span id="admin-repo-label"></span></span>
+      <button type="button" class="btn btn-outline btn-sm" id="admin-signout-btn">Sign out</button>
+    </div>
+  </header>
+
+  <!-- ===================== LOGIN / CONNECT VIEW ===================== -->
+  <div id="admin-login-view" class="admin-login-wrap">
+    <div class="admin-login-card">
+      <h1>Connect to your store</h1>
+      <p>Vivy Admin publishes products by committing directly to your GitHub repository, the same one that runs your store on GitHub Pages. Enter your repository details and a personal access token below. This is stored only on this device.</p>
+
+      <div id="admin-login-error" class="admin-banner is-error" hidden></div>
+
+      <form id="admin-login-form">
+        <div class="form-field">
+          <label for="gh-owner">GitHub username</label>
+          <input type="text" id="gh-owner" placeholder="e.g. yourusername" autocapitalize="off" autocorrect="off" required>
+        </div>
+        <div class="form-field">
+          <label for="gh-repo">Repository name</label>
+          <input type="text" id="gh-repo" placeholder="e.g. Vivy-store" autocapitalize="off" autocorrect="off" required>
+        </div>
+        <div class="form-field">
+          <label for="gh-branch">Branch</label>
+          <input type="text" id="gh-branch" placeholder="main" autocapitalize="off" autocorrect="off">
+          <p class="hint">Leave blank to use your repository's default branch.</p>
+        </div>
+        <div class="form-field">
+          <label for="gh-token">Personal access token</label>
+          <input type="password" id="gh-token" placeholder="github_pat_..." autocapitalize="off" autocorrect="off" required>
+          <p class="hint">Create one below — it never leaves this browser.</p>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block" id="admin-connect-btn">Connect</button>
+      </form>
+
+      <details>
+        <summary>How do I get a token? (2 minutes, do this once)</summary>
+        <ol>
+          <li>On your phone, open <code>github.com/settings/personal-access-tokens/new</code> in your browser (or GitHub app → your profile photo → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token).</li>
+          <li>Give it a name like <code>Vivy Admin</code>.</li>
+          <li>Under <strong>Repository access</strong>, choose <strong>Only select repositories</strong> and pick your Vivy store repository. Do not grant access to any other repository.</li>
+          <li>Under <strong>Permissions → Repository permissions</strong>, find <strong>Contents</strong> and set it to <strong>Read and write</strong>. Leave everything else as No access.</li>
+          <li>Set an expiration (e.g. 90 days) — you'll just repeat this in a few months.</li>
+          <li>Tap <strong>Generate token</strong>, then copy it and paste it above. GitHub only shows it once.</li>
+        </ol>
+        <p style="margin-top:10px;">You can revoke this token at any time from the same GitHub settings page — that instantly blocks any further use of it, including on this page.</p>
+      </details>
+    </div>
+  </div>
+
+  <!-- ===================== DASHBOARD VIEW ===================== -->
+  <div id="admin-dashboard-view" class="admin-container" hidden>
+    <div id="dashboard-banner" hidden></div>
+
+    <div class="admin-toolbar">
+      <div>
+        <h1>Products</h1>
+        <p>Tap a badge to quickly toggle it, or Edit for the full form.</p>
+      </div>
+      <div style="display:flex; gap:8px;">
+        <button type="button" class="btn btn-outline btn-sm" id="admin-refresh-btn">Refresh</button>
+        <button type="button" class="btn btn-primary" id="admin-add-btn">+ Add Product</button>
+      </div>
+    </div>
+
+    <div class="admin-product-list" id="admin-product-list">
+      <p class="hint">Loading products…</p>
+    </div>
+  </div>
+
+  <!-- ===================== ADD / EDIT FORM VIEW ===================== -->
+  <div id="admin-form-view" class="admin-container" hidden>
+    <div class="admin-toolbar">
+      <div>
+        <button type="button" class="btn btn-ghost btn-sm" id="admin-back-btn" style="padding-left:0;">&larr; Back to products</button>
+        <h1 id="admin-form-title">Add Product</h1>
+      </div>
+    </div>
+
+    <div id="form-banner" hidden></div>
+
+    <form id="admin-product-form" class="admin-form-card" novalidate>
+
+      <div class="admin-form-section">
+        <h2>Basics</h2>
+        <div class="form-field">
+          <label for="f-name">Product name</label>
+          <input type="text" id="f-name" required>
+        </div>
+        <div class="form-field">
+          <label for="f-slug">Product slug</label>
+          <input type="text" id="f-slug" required>
+          <p class="admin-slug-preview" id="admin-slug-preview">Product URL: product.html?slug=…</p>
+          <p class="hint">Changing the slug on an existing product changes its live URL — the old link will stop working.</p>
+        </div>
+        <div class="form-field">
+          <label for="f-short-desc">Short description</label>
+          <textarea id="f-short-desc" rows="2" required></textarea>
+          <p class="hint">Shown on product cards across the store.</p>
+        </div>
+        <div class="form-field">
+          <label for="f-desc">Full description</label>
+          <textarea id="f-desc" rows="5"></textarea>
+          <p class="hint">Shown on the product's own page.</p>
+        </div>
+        <div class="form-field">
+          <label for="f-category">Category</label>
+          <select id="f-category" required></select>
+        </div>
+      </div>
+
+      <div class="admin-form-section">
+        <h2>Pricing</h2>
+        <div class="admin-form-row-2">
+          <div class="form-field">
+            <label for="f-price">Price</label>
+            <input type="number" id="f-price" min="0" step="0.01" required>
+          </div>
+          <div class="form-field">
+            <label for="f-sale-price">Sale price <span class="hint">(optional)</span></label>
+            <input type="number" id="f-sale-price" min="0" step="0.01">
+          </div>
+        </div>
+        <div class="form-field">
+          <label for="f-currency">Currency</label>
+          <select id="f-currency">
+            <option value="NGN">NGN — Naira (₦)</option>
+            <option value="USD">USD — US Dollar ($)</option>
+            <option value="GBP">GBP — British Pound (£)</option>
+            <option value="EUR">EUR — Euro (€)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="admin-form-section">
+        <h2>Cover image &amp; digital file</h2>
+        <div class="form-field">
+          <label for="f-image">Product cover image</label>
+          <input type="file" id="f-image" accept="image/*">
+          <p class="admin-file-current" id="f-current-image"></p>
+          <img id="f-image-preview" class="admin-file-preview" alt="Cover preview">
+        </div>
+        <div class="form-field">
+          <label for="f-pdf">Digital product file (PDF)</label>
+          <input type="file" id="f-pdf" accept="application/pdf">
+          <p class="admin-file-current" id="f-current-pdf"></p>
+          <p class="hint">Leave blank when editing to keep the current file.</p>
+        </div>
+      </div>
+
+      <div class="admin-form-section">
+        <h2>What buyers get</h2>
+        <div class="form-field">
+          <label for="f-features">Product features</label>
+          <textarea id="f-features" rows="4" placeholder="One feature per line"></textarea>
+        </div>
+        <div class="form-field">
+          <label for="f-included">What's included</label>
+          <textarea id="f-included" rows="4" placeholder="One item per line"></textarea>
+        </div>
+      </div>
+
+      <div class="admin-form-section">
+        <h2>Visibility</h2>
+        <div class="admin-toggle-grid">
+          <label class="admin-toggle"><span>Featured Product</span><span class="admin-switch"><input type="checkbox" id="f-featured"><span class="slider"></span></span></label>
+          <label class="admin-toggle"><span>Best Seller</span><span class="admin-switch"><input type="checkbox" id="f-bestseller"><span class="slider"></span></span></label>
+          <label class="admin-toggle"><span>New Product</span><span class="admin-switch"><input type="checkbox" id="f-new"><span class="slider"></span></span></label>
+        </div>
+      </div>
+
+      <p class="admin-progress" id="admin-form-progress"></p>
+
+      <div class="admin-form-actions">
+        <button type="submit" class="btn btn-primary btn-lg" id="admin-submit-btn">Publish Product</button>
+        <button type="button" class="btn btn-outline btn-lg" id="admin-cancel-btn">Cancel</button>
+        <button type="button" class="btn btn-danger btn-lg" id="admin-delete-from-form-btn" hidden>Delete Product</button>
+      </div>
+    </form>
+  </div>
+
+</div>
+
+<script src="js/products.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
