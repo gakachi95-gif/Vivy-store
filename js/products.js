@@ -31,7 +31,11 @@ const Vivy = (function () {
 
   async function getFreeResources() {
     const data = await loadData();
-    return data.freeResources || [];
+    const listed = data.freeResources || [];
+    const zeroPriceProducts = (data.products || []).filter((p) => p.price === 0);
+    const seen = new Set(listed.map((p) => p.slug));
+    const merged = listed.concat(zeroPriceProducts.filter((p) => !seen.has(p.slug)));
+    return merged;
   }
 
   async function getBundles() {
@@ -90,7 +94,8 @@ const Vivy = (function () {
 
   function formatMoney(amount, currency) {
     currency = currency || 'USD';
-    const symbol = currency === 'USD' ? '$' : currency + ' ';
+    const symbols = { USD: '$', NGN: '\u20a6', GBP: '\u00a3', EUR: '\u20ac' };
+    const symbol = symbols[currency] || currency + ' ';
     if (amount === 0) return 'Free';
     return symbol + Number(amount).toFixed(amount % 1 === 0 ? 0 : 2);
   }
