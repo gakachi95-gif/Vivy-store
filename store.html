@@ -274,7 +274,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (fFeatured.checked) items = items.filter(p => p.featured);
     if (fBestseller.checked) items = items.filter(p => p.bestSeller);
     if (fNew.checked) items = items.filter(p => p.newProduct);
-    if (fFree.checked) items = items.filter(p => p.price === 0);
+    if (fFree.checked) items = items.filter(p => Vivy.isFree(p));
 
     switch (sortSelect.value) {
       case 'newest': items = items.slice().sort((a,b) => (b.newProduct === a.newProduct) ? 0 : (b.newProduct ? 1 : -1)); break;

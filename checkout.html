@@ -243,7 +243,7 @@
 */
 const VIVY_PAYMENT_CONFIG = {
   flutterwavePublicKey: "FLWPUBK-b14694405dd2848b497a58383994d28e-X",
-  backendUrl: "https://vivyp.onrender.com"
+  backendUrl: Vivy.apiBase
 };
 
 function vivyPaymentIsConfigured() {
@@ -258,12 +258,28 @@ function vivyPaymentIsConfigured() {
 document.addEventListener('DOMContentLoaded', async () => {
   const params = new URLSearchParams(window.location.search);
   const directSlug = params.get('slug');
+
   if (directSlug) {
+    // Defense in depth: even though the free-product flow never links here
+    // any more, never let checkout.html silently add a free item to a
+    // payable cart. If a free slug somehow shows up here (an old bookmark,
+    // a stray link), bounce to the product page instead of mixing it into
+    // a Flutterwave total.
+    const directProduct = await Vivy.getBySlug(directSlug);
+    if (directProduct && Vivy.isFree(directProduct)) {
+      window.location.href = 'product.html?slug=' + encodeURIComponent(directSlug);
+      return;
+    }
     const existing = VivyCart.getItems();
     if (!existing.find(i => i.slug === directSlug)) VivyCart.addItem(directSlug, 1);
   }
 
-  const items = await VivyCart.getDetailedItems();
+  // Belt-and-suspenders: checkout.html only ever charges for items that are
+  // genuinely paid, no matter what ended up in localStorage. This is what
+  // makes it impossible for a leftover/free item to push a real charge to
+  // Flutterwave (the root cause of the earlier $32 bug).
+  const allItems = await VivyCart.getDetailedItems();
+  const items = allItems.filter(i => !Vivy.isFree(i.product));
   const emptyEl = document.getElementById('checkout-empty');
   const layoutEl = document.getElementById('checkout-layout');
 
@@ -333,6 +349,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     e.preventDefault();
     if (!form.checkValidity()) {
       form.reportValidity();
+      return;
+    }
+
+    // Hard stop: Flutterwave must NEVER be opened for a non-positive total.
+    // This can never legitimately happen (free items are already filtered
+    // out above), but if it ever does, refuse rather than charge nothing
+    // (or worse, let a payment provider default to some other amount).
+    if (!(total > 0)) {
+      showError('This order has no payable amount, so no payment is required. If you were trying to get a free product, please use the "Get Free Resource" button on that product\'s page instead.');
       return;
     }
 

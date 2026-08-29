@@ -18,53 +18,31 @@
       <span>Admin</span>
     </div>
     <div class="admin-header-actions" id="admin-header-actions" hidden>
-      <span class="hint"><span class="admin-status-dot"></span><span id="admin-repo-label"></span></span>
+      <span class="hint"><span class="admin-status-dot"></span>Signed in</span>
       <button type="button" class="btn btn-outline btn-sm" id="admin-signout-btn">Sign out</button>
     </div>
   </header>
 
-  <!-- ===================== LOGIN / CONNECT VIEW ===================== -->
+  <!-- ===================== LOGIN VIEW ===================== -->
   <div id="admin-login-view" class="admin-login-wrap">
     <div class="admin-login-card">
-      <h1>Connect to your store</h1>
-      <p>Vivy Admin publishes products by committing directly to your GitHub repository, the same one that runs your store on GitHub Pages. Enter your repository details and a personal access token below. This is stored only on this device.</p>
+      <h1>Admin sign in</h1>
+      <p>Sign in to manage Vivy's products. Publishing goes straight to your store's backend — nothing to configure here.</p>
 
       <div id="admin-login-error" class="admin-banner is-error" hidden></div>
 
       <form id="admin-login-form">
         <div class="form-field">
-          <label for="gh-owner">GitHub username</label>
-          <input type="text" id="gh-owner" placeholder="e.g. yourusername" autocapitalize="off" autocorrect="off" required>
+          <label for="admin-username">Username</label>
+          <input type="text" id="admin-username" autocomplete="username" autocapitalize="off" autocorrect="off" required>
         </div>
         <div class="form-field">
-          <label for="gh-repo">Repository name</label>
-          <input type="text" id="gh-repo" placeholder="e.g. Vivy-store" autocapitalize="off" autocorrect="off" required>
+          <label for="admin-password">Password</label>
+          <input type="password" id="admin-password" autocomplete="current-password" required>
         </div>
-        <div class="form-field">
-          <label for="gh-branch">Branch</label>
-          <input type="text" id="gh-branch" placeholder="main" autocapitalize="off" autocorrect="off">
-          <p class="hint">Leave blank to use your repository's default branch.</p>
-        </div>
-        <div class="form-field">
-          <label for="gh-token">Personal access token</label>
-          <input type="password" id="gh-token" placeholder="github_pat_..." autocapitalize="off" autocorrect="off" required>
-          <p class="hint">Create one below — it never leaves this browser.</p>
-        </div>
-        <button type="submit" class="btn btn-primary btn-block" id="admin-connect-btn">Connect</button>
+        <button type="submit" class="btn btn-primary btn-block" id="admin-connect-btn">Log In</button>
       </form>
-
-      <details>
-        <summary>How do I get a token? (2 minutes, do this once)</summary>
-        <ol>
-          <li>On your phone, open <code>github.com/settings/personal-access-tokens/new</code> in your browser (or GitHub app → your profile photo → Settings → Developer settings → Personal access tokens → Fine-grained tokens → Generate new token).</li>
-          <li>Give it a name like <code>Vivy Admin</code>.</li>
-          <li>Under <strong>Repository access</strong>, choose <strong>Only select repositories</strong> and pick your Vivy store repository. Do not grant access to any other repository.</li>
-          <li>Under <strong>Permissions → Repository permissions</strong>, find <strong>Contents</strong> and set it to <strong>Read and write</strong>. Leave everything else as No access.</li>
-          <li>Set an expiration (e.g. 90 days) — you'll just repeat this in a few months.</li>
-          <li>Tap <strong>Generate token</strong>, then copy it and paste it above. GitHub only shows it once.</li>
-        </ol>
-        <p style="margin-top:10px;">You can revoke this token at any time from the same GitHub settings page — that instantly blocks any further use of it, including on this page.</p>
-      </details>
+      <p class="hint" style="margin-top:14px;">Your admin username and password live only on the server (Render environment variables) — never in this page's code.</p>
     </div>
   </div>
 
@@ -77,8 +55,9 @@
         <h1>Products</h1>
         <p>Tap a badge to quickly toggle it, or Edit for the full form.</p>
       </div>
-      <div style="display:flex; gap:8px;">
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
         <button type="button" class="btn btn-outline btn-sm" id="admin-refresh-btn">Refresh</button>
+        <button type="button" class="btn btn-outline btn-sm" id="admin-import-btn">Import existing products</button>
         <button type="button" class="btn btn-primary" id="admin-add-btn">+ Add Product</button>
       </div>
     </div>
