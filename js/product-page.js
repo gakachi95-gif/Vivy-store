@@ -126,7 +126,7 @@ function renderProduct(product, categories) {
 
   const priceBlock = document.getElementById('product-price-block');
   if (priceBlock) {
-    if (product.price === 0) {
+    if (Vivy.isFree(product)) {
       priceBlock.innerHTML = `<div class="price-ticket"><span class="price-free" style="font-size:1.6rem;">Free</span></div>`;
     } else if (product.salePrice != null && product.salePrice < product.price) {
       const pct = Math.round((1 - product.salePrice / product.price) * 100);
@@ -161,9 +161,32 @@ function renderProduct(product, categories) {
   const stickyPrice = document.getElementById('sticky-cta-price');
   const stickyBuy = document.getElementById('sticky-cta-buy');
 
-  const priceLabel = product.price === 0 ? 'Free' : Vivy.formatMoney(product.salePrice != null ? product.salePrice : product.price, product.currency);
+  const priceLabel = Vivy.isFree(product) ? 'Free' : Vivy.formatMoney(product.salePrice != null ? product.salePrice : product.price, product.currency);
   if (stickyPrice) stickyPrice.textContent = priceLabel;
 
+  /*
+   * FREE vs PAID are two completely separate flows on purpose (see the
+   * $32 bug writeup): a free product must never touch the shopping cart
+   * or checkout.html, so there is no shared code path a stale cart item
+   * could ever leak into.
+   */
+  const goFreeDownload = async (btn) => {
+    const original = btn.textContent;
+    btn.disabled = true;
+    btn.textContent = 'Preparing your download…';
+    try {
+      const res = await fetch(Vivy.apiBase + '/api/free-download/' + encodeURIComponent(product.slug));
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok || !data.downloadUrl) {
+        throw new Error(data.message || 'This item is not available as a free download right now.');
+      }
+      window.location.href = data.downloadUrl;
+    } catch (err) {
+      btn.textContent = original;
+      btn.disabled = false;
+      showBuyError(err.message || "Couldn't start your free download. Please try again.");
+    }
+  };
   const goCheckout = () => {
     VivyCart.addItem(product.slug, 1);
     window.location.href = 'checkout.html?slug=' + encodeURIComponent(product.slug);
@@ -174,19 +197,32 @@ function renderProduct(product, categories) {
     btn.textContent = 'Added to Cart';
     setTimeout(() => (btn.textContent = original), 1600);
   };
+  function showBuyError(message) {
+    let el = document.getElementById('product-buy-error');
+    if (!el) {
+      el = document.createElement('p');
+      el.id = 'product-buy-error';
+      el.style.cssText = 'color:#a53a29;font-size:0.86rem;margin-top:10px;';
+      const row = document.getElementById('product-cta-row');
+      if (row) row.insertAdjacentElement('afterend', el);
+    }
+    el.textContent = message;
+  }
+
+  const isFreeProduct = Vivy.isFree(product);
 
   if (buyBtn) {
-    buyBtn.textContent = product.price === 0 ? 'Get Free Resource' : 'Get Instant Access';
-    buyBtn.addEventListener('click', goCheckout);
+    buyBtn.textContent = isFreeProduct ? 'Get Free Resource' : 'Get Instant Access';
+    buyBtn.addEventListener('click', () => (isFreeProduct ? goFreeDownload(buyBtn) : goCheckout()));
   }
   if (cartBtn) {
-    if (product.price === 0) {
+    if (isFreeProduct) {
       cartBtn.style.display = 'none';
     } else {
       cartBtn.addEventListener('click', () => addToCart(cartBtn));
     }
   }
-  if (stickyBuy) stickyBuy.addEventListener('click', goCheckout);
+  if (stickyBuy) stickyBuy.addEventListener('click', () => (isFreeProduct ? goFreeDownload(stickyBuy) : goCheckout()));
   if (stickyBar) {
     window.addEventListener('scroll', () => {
       const trigger = document.getElementById('product-cta-row');
@@ -289,4 +325,4 @@ function setListHtml(id, items, template) {
     return;
   }
   el.innerHTML = items.map(template).join('');
-}
+    }
