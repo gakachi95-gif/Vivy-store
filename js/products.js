@@ -6,19 +6,65 @@
  */
 
 const Vivy = (function () {
-  const DATA_URL = 'data/products.json';
+  // Single place to configure the backend. checkout.html and admin.html both
+  // reuse this value (Vivy.apiBase) instead of hardcoding it a second time.
+  const API_BASE = 'https://vivyp.onrender.com';
+  const DATA_URL = 'data/products.json'; // offline/fallback copy, bundled in this repo
   let dataPromise = null;
+
+  function normalizeCatalog(data) {
+    data = data || {};
+    if (!Array.isArray(data.products)) data.products = [];
+    if (!Array.isArray(data.categories)) data.categories = [];
+    if (!Array.isArray(data.freeResources)) data.freeResources = [];
+    if (!Array.isArray(data.bundles)) data.bundles = [];
+    // Defensive numeric coercion: a SQL "numeric" column (very common for
+    // money columns) is returned as a STRING by most DB drivers, e.g.
+    // "0.00" instead of 0. Left alone, `product.price === 0` would be
+    // false for a genuinely free product. Normalize once, here, so every
+    // other function in this app can safely assume price/salePrice are
+    // real numbers (or null).
+    const coerce = (p) => {
+      p.price = typeof p.price === 'string' ? parseFloat(p.price) : p.price;
+      if (typeof p.price !== 'number' || isNaN(p.price)) p.price = 0;
+      if (p.salePrice != null) {
+        p.salePrice = typeof p.salePrice === 'string' ? parseFloat(p.salePrice) : p.salePrice;
+        if (isNaN(p.salePrice)) p.salePrice = null;
+      }
+      return p;
+    };
+    data.products = data.products.map(coerce);
+    data.freeResources = data.freeResources.map(coerce);
+    return data;
+  }
+
+  function loadStaticFallback() {
+    return fetch(DATA_URL)
+      .then((res) => {
+        if (!res.ok) throw new Error('Could not load fallback product data (' + res.status + ')');
+        return res.json();
+      })
+      .catch((err) => {
+        console.error('Vivy: fallback product data also failed to load', err);
+        return {};
+      })
+      .then(normalizeCatalog);
+  }
 
   function loadData() {
     if (!dataPromise) {
-      dataPromise = fetch(DATA_URL)
+      dataPromise = fetch(API_BASE + '/api/catalog', { headers: { Accept: 'application/json' } })
         .then((res) => {
-          if (!res.ok) throw new Error('Could not load product data (' + res.status + ')');
+          if (!res.ok) throw new Error('Backend returned ' + res.status);
           return res.json();
         })
+        .then(normalizeCatalog)
         .catch((err) => {
-          console.error('Vivy: failed to load products.json', err);
-          return { categories: [], products: [], freeResources: [], bundles: [] };
+          // The store must keep working even if the backend is briefly down,
+          // sleeping (Render free tier), or not yet updated with the new
+          // /api/catalog route — fall back to the last-published static copy.
+          console.warn('Vivy: backend catalog unavailable, using bundled data/products.json fallback', err);
+          return loadStaticFallback();
         });
     }
     return dataPromise;
@@ -32,7 +78,7 @@ const Vivy = (function () {
   async function getFreeResources() {
     const data = await loadData();
     const listed = data.freeResources || [];
-    const zeroPriceProducts = (data.products || []).filter((p) => p.price === 0);
+    const zeroPriceProducts = (data.products || []).filter((p) => isFree(p));
     const seen = new Set(listed.map((p) => p.slug));
     const merged = listed.concat(zeroPriceProducts.filter((p) => !seen.has(p.slug)));
     return merged;
@@ -117,7 +163,7 @@ const Vivy = (function () {
 
   function badgesHtml(product) {
     const badges = [];
-    if (product.price === 0) badges.push('<span class="badge badge-free">Free</span>');
+    if (isFree(product)) badges.push('<span class="badge badge-free">Free</span>');
     if (product.salePrice != null && product.salePrice < product.price) {
       const pct = Math.round((1 - product.salePrice / product.price) * 100);
       badges.push(`<span class="badge badge-sale">-${pct}%</span>`);
@@ -128,7 +174,7 @@ const Vivy = (function () {
   }
 
   function priceHtml(product) {
-    if (product.price === 0) {
+    if (isFree(product)) {
       return '<span class="price-free">Free</span>';
     }
     if (product.salePrice != null && product.salePrice < product.price) {
@@ -184,9 +230,23 @@ const Vivy = (function () {
     </div>`;
   }
 
+  /**
+   * Explicit, type-safe "is this product free?" check — never relies on
+   * JS truthiness (price 0 is falsy but must still count as free; price
+   * strings like "0.00" must also count as free).
+   */
+  function isFree(product) {
+    if (!product) return false;
+    const raw = product.salePrice != null ? product.salePrice : product.price;
+    const n = typeof raw === 'string' ? parseFloat(raw) : raw;
+    return typeof n === 'number' && !isNaN(n) && n <= 0;
+  }
+
   return {
+    apiBase: API_BASE,
     getAll, getAllSellable, getFreeResources, getBundles, getCategories, getBySlug,
     getFeatured, getBestSellers, getNewProducts, getByCategory, getCategoryMeta, getRelated,
     formatMoney, starsSvg, categoryName, badgesHtml, priceHtml, productCardHtml, escapeHtml, emptyStateHtml,
+    isFree,
   };
 })();
